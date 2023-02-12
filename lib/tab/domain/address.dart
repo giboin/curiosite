@@ -3,7 +3,6 @@ import 'package:curiosite/tools/tool_widget.dart';
 import 'package:equatable/equatable.dart';
 
 class Address extends Equatable {
-  // TODO Address is abstract and each class extending Address is for a different tool ?
   final Tool tool;
   final String path;
   final String? title;

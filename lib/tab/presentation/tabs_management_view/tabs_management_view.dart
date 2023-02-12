@@ -35,6 +35,70 @@ class TabsManagementView extends StatelessWidget {
                     .read<GeneralBloc>()
                     .add(ReorderTabsEvent(oldIndex, newIndex));
               },
+              dragWidgetBuilder: (index, child) {
+                MyTab tab = state.tabs[index];
+                int currentTabIndex =
+                    context.read<GeneralBloc>().state.currentTabIndex;
+                Color currentTabTopColor =
+                    index == currentTabIndex ? Colors.white : Colors.black;
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  key: ValueKey(index),
+                  child: Material(
+                    child: Container(
+                      padding: const EdgeInsets.all(5.0),
+                      color: index == currentTabIndex
+                          ? Colors.blue[400]
+                          : Colors.grey[400],
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Row(
+                                children: [
+                                  tab.currentFavicon
+                                      .getImage(color: currentTabTopColor),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        tab.currentAddress.title ??
+                                            "title beaucoup trop long pour lafficher",
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
+                                        style: TextStyle(
+                                            color: currentTabTopColor),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.clear,
+                                    color: currentTabTopColor,
+                                  )),
+                            ],
+                          ),
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                  width: double.infinity,
+                                  color: Colors.white,
+                                  child: tab.screenshot != null
+                                      ? Image.memory(tab.screenshot!)
+                                      : Container(color: Colors.grey[200])),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
               itemBuilder: (context, index) {
                 MyTab tab = state.tabs[index];
                 int currentTabIndex =
@@ -42,16 +106,16 @@ class TabsManagementView extends StatelessWidget {
                 Color currentTabTopColor =
                     index == currentTabIndex ? Colors.white : Colors.black;
 
-                return GestureDetector(
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
                   key: ValueKey(index),
-                  onTap: () {
-                    context
-                        .read<GeneralBloc>()
-                        .add(UpdateCurrentTabEvent(index));
-                    Navigator.pop(context);
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                  child: GestureDetector(
+                    onTap: () {
+                      context
+                          .read<GeneralBloc>()
+                          .add(UpdateCurrentTabEvent(index));
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(5.0),
                       color: index == currentTabIndex

@@ -44,6 +44,7 @@ class GeneralBloc extends HydratedBloc<GeneralEvent, GeneralState> {
     });
 
     on<DeleteTabEvent>((event, emit) {
+      print(event.indexToDelete);
       List<MyTab> newTabs = List.from(state.tabs);
       int curTabInd = state.currentTabIndex;
       if (curTabInd >= event.indexToDelete) {
@@ -180,6 +181,11 @@ class GeneralBloc extends HydratedBloc<GeneralEvent, GeneralState> {
       MyTab newTab;
 
       Uint8List? bytes = await event.controller.capture();
+      if (bytes == null) {
+        if (kDebugMode) {
+          print("erreur sur la screenshot");
+        }
+      }
       newTab = state.currentTab.copyWith(screenshot: bytes);
 
       tabs[state.currentTabIndex] = newTab;
@@ -216,18 +222,17 @@ class GeneralBloc extends HydratedBloc<GeneralEvent, GeneralState> {
     });
   }
 
-  @override
-  void onChange(Change<GeneralState> change) {
-    // Always call super.onChange with the current change
-    //print(change.nextState.currentTab.history);
-    super.onChange(change);
-  }
+  // @override
+  // void onChange(Change<GeneralState> change) {
+  //   print(change);
+  //   super.onChange(change);
+  // }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
     super.onError(error, stackTrace);
     if (kDebugMode) {
-      print(error);
+      print("==> GeneralBloc error: $error");
     }
   }
 

@@ -15,6 +15,7 @@ class TabView extends StatelessWidget {
     return BlocBuilder<GeneralBloc, GeneralState>(
       builder: (context, state) {
         MyTab currentTab = state.currentTab;
+
         return Scaffold(
           appBar:
               appBar(context, currentTab.currentAddressIndex != 0, controller),

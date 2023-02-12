@@ -3,7 +3,6 @@ import 'package:curiosite/general_bloc/general_bloc.dart';
 import 'package:curiosite/tab/domain/address.dart';
 import 'package:curiosite/tab/domain/tab.dart';
 import 'package:curiosite/tools/tool_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mocktail/mocktail.dart';

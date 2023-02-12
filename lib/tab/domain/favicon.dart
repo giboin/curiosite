@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:curiosite/tools/tool_widget.dart';
 
 class Favicon extends Equatable {
+  //CachedNetworkImage
   final Tool tool;
   final Uint8List? cachedImage;
   const Favicon({required this.tool, this.cachedImage})
